@@ -1,0 +1,69 @@
+cd d: - переход в папку на диске D.
+Clear(cls) - очистить консоль.
+ls(dir) - просмотр содержимого каталога.
+mkdir - создать папку.
+touch - создать файл.
+
+Git в консоли.
+
+git --version - проверить версию.
+git init - инициализация гит.
+git status - 
+git add . - 
+git commit -m "my first commit" - сохранение с сообщением(-m).
+
+Node.js в консоли.
+
+node -v - проверить версию.
+npm init --yes - инициализация и начало работы.
+npm i -g gulp - глобальная установка пакетов.
+npm list -g --depth=0 - список глобальных модулей.
+npm i gulp browser-sync - локальная установка.
+npm list --depth=0 - список локальных модулей.
+В devDependencies записывается все, что нам помогает (все, что не увидит пользователь, с чем не столкнется).
+В dependencies записываем все, что необходимо для проекта. Например, jQuery и т. д.
+npm ERR! Extaneous - означает, что пакет не зафиксирован в зависимостях.
+npm i -S jquery - записываем в зависимости.
+npm i -D gulp - записываем в зависимости разработчика.
+
+Gulp.js в консоли.
+
+https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md - информация по использованию галпа.
+1. Установить Node.js.
+2. npm install --global gulp-cli - устанавливаем глобально галп.
+3. Создаем файл package.json. Прописываем в нем имя, версию, зависимости разработчика.
+4. npm install --save-dev gulp - локальная установка галпа в зависимости разработчика.
+5. Создать gulpfile.js файл. Внести в него содержимое пункта 6.
+6. 	var gulp = require('gulp');
+	gulp.task('default', function() {
+	  // place code for your default task here
+	});
+7. Для запуска галпа набираем gulp.
+
+Работа в проекте с галпом.
+
+1. npm init. В папке создается package.json.
+2. npm install 'gulpjs/gulp.git#4.0' --save-dev - устанавливаем галп 4 в проект. (https://www.liquidlight.co.uk/blog/article/how-do-i-update-to-gulp-4/).
+3. Создаем gulpfile.js.
+4. npm i gulp-sass -D - устанавливаем модуль для перевода css в scss.
+5. npm i gulp-autoprefixer -D - модуль для префиксов.
+Код:
+var gulp = require('gulp'),
+	sass = require('gulp-sass'),
+	autoprefixer = require('gulp-autoprefixer');
+gulp.task('style', function() {
+	return gulp.src('./a/b/c.scss') - указываем путь до папки с файлом.
+		.pipe(sass()) - пропускаем scss-файл через плагин sass.
+		.pipe(autoprefixer()) - пропускаем scss-файл через плагин autoprefixer.
+		.pipe(gulp.dest('./build')); - создается папка, в которую записывается файл.
+});
+
+gulp.task('watch', function() {
+	gulp.watch('./a/b/c.scss', gulp.series('style')) - при изменении этого файла будет запущена таска, которая идет через запятую вторым параметром. Series - последовательное выполнение тасков, parallel - параллельное. 
+});
+
+Для запуска Watch создаем отдельный таск:
+gulp.task('default', gulp.series('style', 'watch'));
+
+Заметки по сборщику:
+paths/app.js - массив путей к js-файлам.

@@ -1,0 +1,68 @@
+1. Создаем файл с расширением scss.
+2. Пропиываем в консоли sass --watch path/to/dist(файл с scss) path/to/dist(папка для сохраненных файлов).
+
+.class {
+	& + .sibling {
+
+	}
+
+	&__elem {
+
+	}
+}
+
+$varName: 10px;
+$varName: (vk, fb, fb);
+.class {
+	position: $varName;
+	background: rgba(#000, .5);
+}
+
+@function inc ($num) {
+	$res: $num + 20px;
+
+	@return $res;
+}
+.class {
+	width: inc(100px);
+}
+
+@mixin position($var1, $var2) {
+	top: $var1;
+	left: $var2;
+}
+.class {
+	@include(10px, 20px);
+}
+
+.class {
+	@extend .class-2;
+}
+
+@mixin width ($width) {
+	width: $width;
+
+	@if width < 100px {
+		text-align: center;      ==      text-align: if($width < 100px, center, left);
+	} @else {
+		text-aling: left;
+	}
+}
+
+$socials : (vk, tw, fb);
+@each $social in $socials {
+	.social__item_#{$social} {
+		background: url('path/to/#{$social}.png');
+	}
+}
+
+_________________________________________________________
+
+Установка галп в проект
+
+1. Устанавливаем gulp.
+2. Устанавливаем компилятор sass: npm install gulp-sass --save-dev
+@import 'layout/adjustment'; - подсоединяем страницы к одной странице.
+gulp-sass-glob помогает импортировать целыми папками.
+gulp-sourcemaps - показывает, в каком конкретно из импортированных файлов лежит css-свойство.
+gulp.spritesmith - для спрайтов.

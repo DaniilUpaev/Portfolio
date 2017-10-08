@@ -1,0 +1,144 @@
+1.	Переходим в консоли в папку.
+2.	Создать файл с расширением pug.
+3.	Устанавливаем pug: npm i -g pug-cli.
+4.	Чтобы pug превратить в html, необходимо написать в консоли pug ., где вместо точки нужно написать адрес нахождения файла pug.
+5.	Устанавливаем watcher: pug --watch ./pug/ --out ./html/. Он нужен, чтобы не перезапускать постоянно компилятор.
+
+Настраиваем галп для pug:
+
+npm init --yes; npm I --save-dev gulp gulp-pug; touch gulpfile.js
+
+a(href='#', title='link').class
+pug --watch --pretty ./pug/ --out ./html/ - для табуляции.
+----------------------------------------
+- var item = 'Some value'
+a(href='#').block= item
+----------------------------------------
+- var items = ['one', 'two', 'three']
+each item, index in items
+	.wrapper - количество оболочек зависит от количества значений в массиве. В данном случае - 3.
+		.block= item
+		.index= index - index является 2-й переменной и порядковым номером значений, начиная с нуля.
+		.length= items.length - длина массива.
+----------------------------------------
+- var items = ['one', 'two', 'three']
+- for (var i = 0; i < item.length; i++)
+	.wrapper
+		.block= item[i]
+		.index= index
+		.length= items.length
+Все то же самое, только с помощью for.
+----------------------------------------
+- 
+	var obj = {
+		val1: 'prop', 
+		val2: 'prop2'
+	}
+each value, key in obj
+	.obj
+		.key= key
+		.value= value
+Когда val1: '<a href='#'></a>', нужно поставить восклицательный знак: .value! = item.
+----------------------------------------
+- 
+	var obj = [
+		{
+			link: '<a href='#'>link1</a>',
+			title: 'prop1'		
+		},{
+			link: '<a href='#'>link2</a>',
+			title: 'prop2'
+		},{
+			link: '<a href='#'>link3</a>',
+			title: 'prop3'
+		}
+	]
+each item in obj
+	.obj
+		.link!= item.link
+		.title= item.title
+
+Интерполяция:
+
+each item in obj
+	.obj
+		.link Здесь будет !{item.link}
+		.title(data-title=`${item.title}`)
+
+Условие:
+
+each item in obj
+	.obj
+		.link Здесь будет !{item.link}
+		if item.title == 'prop2'
+			.title(data-title=`${item.title}`) Условие отработало
+		else if item.title == 'prop3'
+			.title Условие не отработало
+		else
+			.title Все ок
+-----------------------------------------------------------------------------
+include ../sections/header - так подключаем секции к страницам.
+extends ../layout - подключаем шаблон к странице.
+block title - все изменяемые части страницы помещаем в блоки.
+	title Home page
+
+Пример главной страницы:
+
+extends ../layout
+block title
+	title Homepage
+block h2
+	h2 Заголовок
+----------------------------------------------------------------------------
+Галп для пага:
+
+npm init --yes; npm I --save-dev gulp gulp-pug; touch gulpfile.js - устанавливаем галп и паг в проект.
+
+В галпфайле пишем:
+
+const gulp = require('gulp'),
+const pug = require('gulp-pug');
+
+gulp.task('pug', => {
+	gulp.src('src/a/*.pug');
+		.pipe(pug({
+			pretty: '\t'
+		}))
+		.pipe(gulp.dest('dist'))
+});
+
+gulp.task('watch', () => {
+	gulp.watch('src/a/*.pug', ['pug'])
+});
+
+Затем пишем в консоли gulp watch и меняем что-то в pug-файле.
+----------------------------------------------------------------------------
+mixin - для повторяющейся части кода.
+mixin test - определяем миксин.
+	h1 Title
++test - вставляем миксин в нужную часть разметки.
+
+mixin test (name)
+	h1 Title #{name}
+	h2= name
++test('some name')
+
+Миксин для навигации:
+
+mixin nav(className, items, activeItem)
+	nav(class=`${className}`)
+		.container
+			ul(class=`${className}__list`)
+				each item, ndx in items
+					li(class=`${className}__item` + ( (ndx === activeItem) ? ` ${className}__item_active` : '' ) )
+						a(class=`${className}__link`)= item
++nav('nav', ['Home', 'about', 'contacts'], 2)
+
+--------------------------------------------------------------------------------
+
+.socials
+	ul.socials__list
+		each social in ['vk', 'fb', 'tw']
+			li.socials__item
+				a(class=`socials__link socials__link_${social}` href='#')
+					img.socials__link-pic(src=`/img/icons/${social}.png`, alt='')

@@ -1,0 +1,40 @@
+<meta name='viewport' content='width=device-width'> - лучше писать так, чтобы неадаптивная версия корректно отображалась в телефоне.
+Всегда писать alt для картинок.
+<nav> - для верхнего меню.
+<aside> - для сайд-бара.
+<section> - для новостей, статей.
+<article> - для статей, запись блога, форума. Располагается внутри <section>.
+Использовать line-height для <span> и <a> вместо padding и margin.
+Font-size: 0; - способ избавиться от пробелов при display: inline-block;
+Использовать Normalize.css для сброса различий стилей браузера.
+npm i -S normalize.css - установка Normalize.css.
+
+Горизональное центрирование.
+
+https://css-tricks.com/centering-css-complete-guide/
+Строчные элементы: text-align: center;
+Блочные элементы: margin: 0 auto + фиксированная ширина.
+line-height - вертикальное центрирование.
+
+Как делать круглые картинки?
+
+<div clas='box'><img class='avatar'></div>
+.box {
+	width: 150px;
+	height: 150px;
+	border-radius: 50% 50%;
+	overfflow: hidden;
+}
+.avatar {
+	width: 100%;
+}
+
+Если писать а и span в одну строчку друг за другом, отображаться они будут без пробелов.
+Box-sizing: border-box; - css для отмены завиимости размеров блока от padding, margin и border.
+outline: 1px solid black; - отличается от border тем, что не влияет на размер блока.
+https://webref.ru/css/type/pseudoelement - псевдоэлементы.
+.a{color: red;} или .a.a.a{color: blue;} - цвет будет синий.
+line-height - межстрочный интервал. Зависит от размера шрифта. Интервал = размер шрифта * line-height.
+https://html5book.ru/css3-flexbox/ - флексбокс.
+
+Как прибивать футер?
